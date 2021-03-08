@@ -3,6 +3,7 @@
 
 #include <elf.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define MAGIC_NUMBER	"\177ELF"
 
