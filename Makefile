@@ -33,13 +33,13 @@ objdump: $(OBJOBJS)
 	$(CC) $(OBJOBJS) -o $(OBJNAME) $(LDFLAGS)
 
 clean:
-	$(RM) ./my_nm
-	$(RM) ./my_objdump
+	$(RM) $(OBJOBJS)
+	$(RM) $(NMOBJS)
 
 fclean: clean
-	make fclean -C nm/
-	make fclean -C objdump/
-
+	$(RM) ./my_nm
+	$(RM) ./my_objdump
+:
 re: fclean all
 
 .PHONY: all nm objdump clean fclean re
