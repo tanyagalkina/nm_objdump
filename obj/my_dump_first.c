@@ -22,6 +22,11 @@ int type_check(prop_t *in_file)
         return error64(in_file);
     else if (in_file->form64.el->e_ident[EI_CLASS] == ELFCLASS32) {
         printf("I am 32 bit data))\n");
+        if (in_file->form64.el->e_machine == EM_386)
+            printf("I have found the Intel 80386!\n");
+        printf("%s:\tfile format elf64-x86-64\n", in_file->name);
+        printf("architecture: %x, flags 0x%08x:\n",
+               in_file->form64.el->e_machine, in_file->form64.el->e_flags);
         return (0);
     }
     else {

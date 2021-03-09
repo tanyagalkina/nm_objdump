@@ -35,7 +35,7 @@ typedef struct prop
     f64bits_t form64;
 } prop_t;
 
-
+int show_file(prop_t *in_file);
 int my_dump(char *path);
 int error64(prop_t *);
 
