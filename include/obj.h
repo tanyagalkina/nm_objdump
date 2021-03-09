@@ -36,7 +36,7 @@ typedef struct prop
 
 
 int my_dump(char *path);
-
+int error64(prop_t *);
 
 //#define MAGIC_NUMBER	"\177ELF"
 
