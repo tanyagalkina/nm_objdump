@@ -18,7 +18,8 @@ NMSRCS	=	./nm/main.c 		\
 
 OBJSRCS	=	./obj/main.c 		\
 		./obj/my_dump_first.c	\
-		./obj/error64.c
+		./obj/error64.c		\
+		./obj/show_file.c
 
 NMOBJS	= $(NMSRCS:.c=.o)
 OBJOBJS	= $(OBJSRCS:.c=.o)

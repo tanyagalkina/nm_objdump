@@ -20,6 +20,7 @@ typedef struct f32_bits
 typedef struct f64_bits
 {
     char *name;
+    char *itself;
     void *bytes;
     Elf64_Ehdr *el;
     Elf64_Shdr *sh;

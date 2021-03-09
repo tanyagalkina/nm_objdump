@@ -77,7 +77,9 @@ int my_dump(char *path)
         return (84);
     if (type_check(&in_file) == 84)
         return (84);
-    return (0);
+    return show_file(&in_file);
+    //printf("%s\n", in_file.form64.bytes);
+    //return (0);
 
 }
 
