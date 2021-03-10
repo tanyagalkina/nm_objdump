@@ -23,7 +23,11 @@ in_file->form64.ehdr->e_flags);
         printf("my_objdump: %s: file format not recognized\n", in_file->name);
         return (84);
     }
-    else return (84);
+    else {
+        printf("my_objdump: %s: file format not recognized\n", in_file->name);
+
+        return (84);
+    }
 }
 
 int read_file(char *path, prop_t *in_file)
@@ -45,7 +49,7 @@ int read_file(char *path, prop_t *in_file)
         in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes;
         return (0);
     } else {
-        printf("my_objdump: %s: %s\n", path, strerror(errno));
+        printf("my_objdump: '%s': %s\n", path, strerror(errno));
         return (84);
     }
 }
