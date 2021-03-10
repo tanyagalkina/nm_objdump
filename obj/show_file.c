@@ -1,61 +1,74 @@
-//
-// Created by tag43 on 3/9/21.
-//
+/*
+** EPITECH PROJECT, 2020
+** objdump
+** File description:
+** src
+*/
 
 #include "../include/obj.h"
+#include "../include/flags.h"
 
-void show_header(prop_t *in_file)
+char *get_arch(char e_machine)
 {
-    printf("I am header\n");
+    if (e_machine == EM_386)
+        return "i386";
+    if (e_machine == EM_X86_64)
+        return "i386:x86-64";
+    return "unknown";
 }
 
-void show_dump(prop_t *in_file)
+int get_flags(int type)
 {
-    printf("I am dump\n");
+    switch (type) {
+        case (ET_NONE):
+            return (0);
+        case (ET_REL):
+            return (HAS_RELOC +  HAS_SYMS);
+        case (ET_EXEC):
+            return (EXEC_P + HAS_SYMS + D_PAGED);
+        case (ET_DYN):
+            return (HAS_SYMS + DYNAMIC + D_PAGED);
+        default:
+            return (0);
+    }
 }
 
-void show_class(prop_t *in_file)
+char *get_type(int type)
 {
+    switch (type) {
+        case (ET_NONE):
+            return "";
+        case (ET_REL):
+            return "HAS_RELOC, HAS_SYMS";
+        case (ET_EXEC):
+            return "EXEC_P, HAS_SYMS, D_PAGED";
+        case (ET_DYN):
+            return "HAS_SYMS, DYNAMIC, D_PAGED";
+        default:
+            return "";
+    }
+}
 
-    /*int	ftypes[ET_NUM];
-    char	*types[ET_NUM];
-
-    types[ET_NONE] = "";
-    ftypes[ET_NONE] = 0x0;
-    types[ET_REL] = "HAS_RELOC, HAS_SYMS";
-    ftypes[ET_REL] = 0x11;
-    types[ET_EXEC] = "EXEC_P, HAS_SYMS, D_PAGED";
-    ftypes[ET_EXEC] = 0x112;
-    types[ET_DYN] = "HAS_SYMS, DYNAMIC, D_PAGED";
-    ftypes[ET_DYN] = 0x150;
-    types[ET_CORE] = "";
-    ftypes[ET_CORE] = 0x0;
-    if (data->elf->e_type < ET_NUM)
-    {
-        printf("architecture: i386:x86-64, flags 0x%08x:\n",
-               ftypes[data->elf->e_type]);
-        printf("%s\n", types[data->elf->e_type]);
-        printf("start address 0x%016lx\n", data->elf->e_entry);
-    }*/
-
-    printf("%s:\tfile format elf64-x86-64\n", in_file->name);
-    printf("architecture: %x, flags 0x%08x:\n",
-           in_file->form64.el->e_machine, in_file->form64.el->e_flags);
+void show_header64(prop_t *in_file)
+{
+    printf("%s:     file format elf64-x86-64\n", in_file->name);
+    printf("architecture: %s, flags 0x%08x:\n",
+           get_arch(in_file->form64.ehdr->e_machine), get_flags(in_file->form64.ehdr->e_type));
+           printf("%s\n", get_type(in_file->form64.ehdr->e_type));
+    printf("start address 0x%016lx\n\n", in_file->form64.ehdr->e_entry);
 }
 
 int show_file(prop_t *in_file)
 {
     if (in_file->bits == 64) {
-         in_file->form64.sh = (Elf64_Shdr *)(in_file->form64.bytes +\
-         in_file->form64.el->e_shoff);
+         in_file->form64.shdr = (Elf64_Shdr *)(in_file->form64.bytes +\
+         in_file->form64.ehdr->e_shoff);
          in_file->form64.itself = (char *)(in_file->form64.bytes +\
-         in_file->form64.sh[in_file->form64.el->e_shstrndx].sh_offset);
+         in_file->form64.shdr[in_file->form64.ehdr->e_shstrndx].sh_offset);
          write(1, "\n", 1);
-         show_class(in_file);
-         show_header(in_file);
-         show_dump(in_file);
+         show_header64(in_file);
+         show_dump64(&in_file->form64);
          return (0);
     }
     return (84);
-
 }
