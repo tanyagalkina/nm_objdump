@@ -35,6 +35,16 @@ int type_check(prop_t *in_file)
     }
 }
 
+int corrupted(prop_t *in_file, size_t size)
+{
+    void *end = (char *)in_file->form64.bytes + size;
+    if ((in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes) == NULL)
+        return (84);
+    if ((void *)in_file->form64.ehdr >= (void *)end)
+        return (84);
+    return (0);
+}
+
 
 int read_file(char *path, prop_t *in_file)
 {
@@ -52,8 +62,7 @@ int read_file(char *path, prop_t *in_file)
             return (84);
         }
         close (in_file->fd);
-        in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes;
-        return (0);
+        return corrupted(in_file, s.st_size);
     } else {
         printf("my_nm: '%s': %s\n", path, strerror(errno));
         return (84);
