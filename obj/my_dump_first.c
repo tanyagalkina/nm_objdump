@@ -10,7 +10,7 @@
 int corrupted(prop_t *in_file, size_t size)
 {
     void *end = (char *)in_file->form64.bytes + size;
-
+    in_file->form64.end = end;
     if ((in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes) == NULL)
         return (84);
     if ((void *)in_file->form64.ehdr >= (void *)end)

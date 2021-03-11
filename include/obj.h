@@ -25,6 +25,7 @@ typedef struct f32_bits
 
 typedef struct f64_bits
 {
+    void *end;
     char *name;
     char *itself;
     void *bytes;

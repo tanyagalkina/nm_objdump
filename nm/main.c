@@ -7,6 +7,21 @@
 
 #include "../include/nm.h"
 
+static int error_handling64(prop_t *f)
+{
+    if (((f->form64.shdr = (Elf64_Shdr *)(f->form64.bytes \
++ f->form64.ehdr->e_shoff)) == NULL) || \
+((f->form64.itself = (char *)(f->form64.bytes \
++ f->form64.shdr[f->form64.ehdr->e_shstrndx].sh_offset)) == NULL))
+        return (84);
+    if (((void *)f->form64.shdr >= (void *)f->form64.end) ||
+        ((void *)f->form64.itself >= (void *)f->form64.end))
+        return (84);
+    if (f->form64.itself && f->form64.shdr && f->form64.ehdr)
+        return (0);
+    return (84);
+}
+
 int error64(prop_t *in_file)
 {
     in_file->bits = 64;
@@ -18,7 +33,7 @@ int error64(prop_t *in_file)
         printf("my_nm: %s: file format not recognized\n", in_file->name);
         return (84);
     }
-    return (0);
+    return error_handling64(in_file);
 }
 
 int type_check(prop_t *in_file)
