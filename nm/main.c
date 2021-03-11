@@ -1,7 +1,9 @@
-//
-// Created by tag43 on 2/28/21.
-//
-
+/*
+** EPITECH PROJECT, 2020
+** nm
+** File description:
+** src
+*/
 
 #include "../include/nm.h"
 
@@ -45,7 +47,6 @@ int corrupted(prop_t *in_file, size_t size)
     return (0);
 }
 
-
 int read_file(char *path, prop_t *in_file)
 {
     struct stat s;
@@ -56,7 +57,7 @@ int read_file(char *path, prop_t *in_file)
             printf("my_nm: Warning: '%s' is a directory\n", path);
             return (84);
         }
-        in_file->form64.bytes = mmap ( NULL , s . st_size , PROT_READ , MAP_PRIVATE , in_file->fd , 0) ;
+        in_file->form64.bytes = mmap ( NULL , s.st_size, PROT_READ, MAP_PRIVATE, in_file->fd, 0) ;
         if (in_file->form64.bytes == (void *) -1) {
             perror ("mmap");
             return (84);
@@ -77,7 +78,6 @@ int my_nm(char *path)
         return (84);
     if (type_check(&in_file) == 84)
         return (84);
-    //return show_file(&in_file);
     printf("my_nm : %s: no symbols\n", path);
     return (0);
 }

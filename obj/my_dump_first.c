@@ -10,8 +10,9 @@
 int corrupted(prop_t *in_file, size_t size)
 {
     void *end = (char *)in_file->form64.bytes + size;
+
     if ((in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes) == NULL)
-       return (84);
+        return (84);
     if ((void *)in_file->form64.ehdr >= (void *)end)
         return (84);
     return (0);
@@ -26,7 +27,7 @@ int type_check(prop_t *in_file)
             printf("%s:     file format elf32-i386\n", in_file->name);
             printf("architecture: i386, flags 0x%08x:\n", \
 in_file->form64.ehdr->e_flags);
-                   return (0);
+            return (0);
         }
         printf("my_objdump: %s: file format not recognized\n", in_file->name);
         return (84);
@@ -68,8 +69,6 @@ int my_dump(char *path)
 
     if (read_file(path, &in_file) == 84)
         return (84);
-    //if (corrupted(path, &in_file) == 84)
-      //  return (84);
     if (type_check(&in_file) == 84)
         return (84);
     return show_file(&in_file);
