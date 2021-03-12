@@ -5,7 +5,6 @@
 ## Makefile
 ##
 
-
 NMNAME	= my_nm
 
 OBJNAME	= my_objdump

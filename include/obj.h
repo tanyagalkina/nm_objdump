@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** obj.h
-** File description:
-*/
-
 #ifndef OBJDUMP_H_
 #define OBJDUMP_H_
 
