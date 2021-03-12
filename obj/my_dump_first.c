@@ -11,19 +11,20 @@ int corrupted(prop_t *in_file, size_t size)
 {
     void *end = (char *)in_file->form64.bytes + size;
     in_file->form64.end = end;
-    if ((in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes) == NULL)
+    if ((in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes) == NULL) {
+        printf("my_objdump: %s: invalid pointer\n", in_file->name);
         return (84);
-    if ((void *)in_file->form64.ehdr >= (void *)end)
+    }
+    if ((void *)in_file->form64.ehdr >= (void *)end) {
+        printf("my_objdump: %s: the path is truncated\n", in_file->name);
         return (84);
+    }
     return (0);
 }
 
-int type_check(prop_t *in_file)
+int error32(prop_t *in_file)
 {
-    if (in_file->form64.ehdr->e_ident[EI_CLASS] == ELFCLASS64)
-        return error64(in_file);
-    else if (in_file->form64.ehdr->e_ident[EI_CLASS] == ELFCLASS32) {
-        if (in_file->form64.ehdr->e_machine == EM_386) {
+    if (in_file->form64.ehdr->e_machine == EM_386) {
             printf("%s:     file format elf32-i386\n", in_file->name);
             printf("architecture: i386, flags 0x%08x:\n", \
 in_file->form64.ehdr->e_flags);
@@ -31,20 +32,46 @@ in_file->form64.ehdr->e_flags);
         }
         printf("my_objdump: %s: file format not recognized\n", in_file->name);
         return (84);
-    }
-    else {
-        printf("my_objdump: %s: file format not recognized\n", in_file->name);
+}
 
+int type_check(prop_t *f)
+{
+    unsigned char *id = f->form64.ehdr->e_ident;
+    if (id[EI_CLASS] == ELFCLASS64 \
+&& id[EI_DATA] != ELFDATANONE && id[EI_VERSION == EV_CURRENT])
+        return error64(f);
+    else if (id[EI_CLASS] == ELFCLASS32 && \
+id[EI_DATA] != ELFDATANONE && id[EI_VERSION == EV_CURRENT]) {
+        return error32(f);
+    }
+    printf("my_objdump: %s: file format not recognized\n", f->name);
+    return (84);
+}
+
+static int print_strerror(char *path)
+{
+    struct stat s;
+
+    if (errno == ENOENT) {
+        printf("my_objdump: '%s': %s\n", path, "No such file");
         return (84);
     }
+    stat(path, &s);
+    if (!S_ISREG(s.st_mode)) {
+        printf("my_objdump: Warning: '%s' is not an ordinary file\n", path);
+        return (84);
+    }
+    printf("my_objdump: %s: %s\n", path, strerror(errno));
+    return (84);
 }
 
 int read_file(char *path, prop_t *in_file)
 {
     struct stat s;
-    in_file->fd = open (path, O_RDONLY);
+
+    in_file->fd = open(path, O_RDONLY);
     if (in_file->fd != -1) {
-        fstat (in_file->fd, &s);
+       fstat (in_file->fd, &s);
         if (S_ISDIR(s.st_mode)) {
             printf("my_objdump: Warning: '%s' is a directory\n", path);
             return (84);
@@ -56,10 +83,8 @@ int read_file(char *path, prop_t *in_file)
         }
         close (in_file->fd);
         return corrupted(in_file, s.st_size);
-    } else {
-        printf("my_objdump: '%s': %s\n", path, strerror(errno));
-        return (84);
-    }
+    } else
+        return (print_strerror(path));
 }
 
 int my_dump(char *path)

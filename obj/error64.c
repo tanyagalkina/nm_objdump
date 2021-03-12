@@ -12,11 +12,15 @@ static int error_handling64(prop_t *f)
     if (((f->form64.shdr = (Elf64_Shdr *)(f->form64.bytes \
 + f->form64.ehdr->e_shoff)) == NULL) || \
 ((f->form64.itself = (char *)(f->form64.bytes \
-+ f->form64.shdr[f->form64.ehdr->e_shstrndx].sh_offset)) == NULL))
-    return (84);
-    if (((void *)f->form64.shdr >= (void *)f->form64.end) ||
-        ((void *)f->form64.itself >= (void *)f->form64.end))
++ f->form64.shdr[f->form64.ehdr->e_shstrndx].sh_offset)) == NULL)) {
+        printf("my_objdump: %s: invalid pointer\n", f->name);
         return (84);
+    }
+    if (((void *)f->form64.shdr >= (void *)f->form64.end) ||
+        ((void *)f->form64.itself >= (void *)f->form64.end)) {
+        printf("my_objdump: %s: file truncated\n", f->name);
+        return (84);
+    }
     if (f->form64.itself && f->form64.shdr && f->form64.ehdr)
         return (0);
     return (84);
