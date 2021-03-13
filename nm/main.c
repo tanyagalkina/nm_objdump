@@ -38,8 +38,7 @@ int error64(prop_t *in_file)
         fprintf(stderr, "nm: %s: file format not recognized\n", in_file->name);
         return (84);
     }
-    return (0);
-    //return error_handling64(in_file);
+    return error_handling64(in_file);
 }
 
 int error32(prop_t *f)
@@ -77,7 +76,7 @@ int type_check(prop_t *f)
 id[EI_DATA] != ELFDATANONE && id[EI_VERSION == EV_CURRENT]) {
         return error32(f);
     }
-   // if (print_advanced(id, f) == 0)
+   //if (print_advanced(id, f) == 0)
         fprintf(stderr, "nm: %s: file format not recognized\n", f->name);
     return (84);
 }
@@ -102,7 +101,7 @@ static int print_strerror(char *path)
 int corrupted(prop_t *in_file, size_t size)
 {
     void *end = (char *)in_file->form64.bytes + size;
-    in_file->form64.ehdr = end;
+    in_file->form64.end = end;
     if ((in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes) == NULL) {
         fprintf(stderr, "nm: %s: file format not recognized\n", in_file->name);
         return (84);
@@ -144,8 +143,8 @@ int my_nm(char *path)
         return (84);
     if (type_check(&in_file) == 84)
         return (84);
-    fprintf(stderr, "nm: %s: no symbols\n", path);
-    return (84);
+    printf("hello, nm!\n");
+    return (0);
 }
 
 int main(int ac, char **av)
