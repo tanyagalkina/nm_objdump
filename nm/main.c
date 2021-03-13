@@ -13,7 +13,7 @@ static int error_handling64(prop_t *f)
 + f->form64.ehdr->e_shoff)) == NULL) || \
 ((f->form64.itself = (char *)(f->form64.bytes \
 + f->form64.shdr[f->form64.ehdr->e_shstrndx].sh_offset)) == NULL)) {
-        fprintf(stderr, "nm: %s: invalid pointer\n", f->name);
+        fprintf(stderr, "nm: %s: file format not recognized\n", f->name);
         return (84);
     }
     if (((void *)f->form64.shdr >= (void *)f->form64.end) ||
@@ -52,15 +52,15 @@ int error32(prop_t *f)
 int print_advanced(unsigned char *id, prop_t *f)
 {
     if (id[EI_CLASS] == ELFCLASSNONE) {
-        fprintf(stderr, "nm: %s: file architecture not supported\n", f->name);
+        fprintf(stderr, "nm: %s: file format not recognized\n", f->name);
         return (84);
     }
     if (id[EI_DATA] != ELFDATA2LSB) {
-        fprintf(stderr, "nm: %s: file byte order not supported\n", f->name);
+        fprintf(stderr, "nm: %s: file format not recognized\n", f->name);
         return (84);
     }
     if (id[EI_VERSION] != EV_CURRENT) {
-        fprintf(stderr, "nm: %s: file ELF version not supported\n", f->name);
+        fprintf(stderr, "nm: %s: file format not recognized\n", f->name);
     }
     return (0);
 }
@@ -76,7 +76,7 @@ int type_check(prop_t *f)
 id[EI_DATA] != ELFDATANONE && id[EI_VERSION == EV_CURRENT]) {
         return error32(f);
     }
-    if (print_advanced(id, f) == 0)
+   // if (print_advanced(id, f) == 0)
         fprintf(stderr, "nm: %s: file format not recognized\n", f->name);
     return (84);
 }
@@ -102,11 +102,11 @@ int corrupted(prop_t *in_file, size_t size)
 {
     void *end = (char *)in_file->form64.bytes + size;
     if ((in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes) == NULL) {
-        fprintf(stderr, "nm: %s: invalid pointer\n", in_file->name);
+        fprintf(stderr, "nm: %s: file format not recognized\n", in_file->name);
         return (84);
     }
     if ((void *)in_file->form64.ehdr >= (void *)end) {
-        fprintf(stderr, "nm: %s: the path is truncated\n", in_file->name);
+        fprintf(stderr, "nm: %s: file format not recognized\n", in_file->name);
         return (84);
     }
     return (0);
@@ -143,7 +143,7 @@ int my_nm(char *path)
     if (type_check(&in_file) == 84)
         return (84);
     fprintf(stderr, "nm: %s: no symbols\n", path);
-    return (0);
+    return (84);
 }
 
 int main(int ac, char **av)

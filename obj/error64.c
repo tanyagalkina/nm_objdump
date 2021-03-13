@@ -13,12 +13,12 @@ static int error_handling64(prop_t *f)
 + f->form64.ehdr->e_shoff)) == NULL) || \
 ((f->form64.itself = (char *)(f->form64.bytes \
 + f->form64.shdr[f->form64.ehdr->e_shstrndx].sh_offset)) == NULL)) {
-        fprintf(stderr, "objdump: %s: invalid pointer\n", f->name);
+        fprintf(stderr, "objdump: %s: file format not recognized\n", f->name);
         return (84);
     }
     if (((void *)f->form64.shdr >= (void *)f->form64.end) ||
         ((void *)f->form64.itself >= (void *)f->form64.end)) {
-        fprintf(stderr, "objdump: %s: file truncated\n", f->name);
+        fprintf(stderr, "objdump: %s: file format not recognized\n", f->name);
         return (84);
     }
     if (f->form64.itself && f->form64.shdr && f->form64.ehdr)

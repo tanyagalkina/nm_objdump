@@ -12,11 +12,11 @@ int corrupted(prop_t *in_file, size_t size)
     void *end = (char *)in_file->form64.bytes + size;
     in_file->form64.end = end;
     if ((in_file->form64.ehdr = (Elf64_Ehdr *)in_file->form64.bytes) == NULL) {
-        fprintf(stderr, "objdump: %s: invalid pointer\n", in_file->name);
+        fprintf(stderr, "objdump: %s: file format not recognized\n", in_file->name);
         return (84);
     }
     if ((void *)in_file->form64.ehdr >= (void *)end) {
-        fprintf(stderr, "objdump: %s: the path is truncated\n", in_file->name);
+        fprintf(stderr, "objdump: %s: file format not recognized\n", in_file->name);
         return (84);
     }
     return (0);
@@ -37,15 +37,15 @@ in_file->form64.ehdr->e_flags);
 int print_advanced(unsigned char *id, prop_t *f)
 {
     if (id[EI_CLASS] == ELFCLASSNONE) {
-        fprintf(stderr, "objdump: %s: file architecture not supported\n", f->name);
+        fprintf(stderr, "objdump: %s: file format not recognized\n", f->name);
         return (84);
     }
     if (id[EI_DATA] != ELFDATA2LSB) {
-        fprintf(stderr, "objdump: %s: file byte order not supported\n", f->name);
+        fprintf(stderr, "objdump: %s: file format not recognized\n", f->name);
         return (84);
     }
     if (id[EI_VERSION] != EV_CURRENT) {
-        fprintf(stderr, "objdump: %s: file ELF version not supported\n", f->name);
+        fprintf(stderr, "objdump: %s: file format not recognized\n", f->name);
     }
     return (0);
 }
