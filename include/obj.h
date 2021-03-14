@@ -1,3 +1,11 @@
+/*
+** EPITECH PROJECT, 2020
+** obj
+** File description:
+** *.h
+*/
+
+
 #ifndef OBJDUMP_H_
 #define OBJDUMP_H_
 
@@ -45,6 +53,7 @@ int error64(prop_t *);
 void show_dump64(f64bits_t *type_64);
 void print_sections(const Elf64_Shdr, char *);
 void print_space(unsigned int i, char end);
+int type_check(prop_t *f);
 void print_hex(const Elf64_Shdr shdr, char *bytes, \
 unsigned int i);
 

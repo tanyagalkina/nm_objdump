@@ -1,7 +1,8 @@
 /*
 ** EPITECH PROJECT, 2020
-** nm.h
+** nm
 ** File description:
+** *.h
 */
 
 #ifndef NM_H_
@@ -33,5 +34,7 @@ typedef struct prop
     int bits;
     f64bits_t form64;
 } prop_t;
+
+int type_check(prop_t *f);
 
 #endif /* !NM_H_ */

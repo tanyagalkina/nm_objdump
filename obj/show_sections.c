@@ -32,7 +32,8 @@ void show_dump64(f64bits_t *type_64)
 {
     for (int i = 0; i < type_64->ehdr->e_shnum; i++)
         if (if_show(type_64, i) && type_64->shdr[i].sh_size != 0) {
-            printf("Contents of section %s:\n", type_64->itself + type_64->shdr[i].sh_name);
+            printf("Contents of section %s:\n", type_64->itself + \
+type_64->shdr[i].sh_name);
             print_sections(type_64->shdr[i], type_64->bytes);
         }
 }

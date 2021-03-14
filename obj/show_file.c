@@ -53,7 +53,8 @@ void show_header64(prop_t *in_file)
 {
     printf("%s:     file format elf64-x86-64\n", in_file->name);
     printf("architecture: %s, flags 0x%08x:\n", \
-get_arch(in_file->form64.ehdr->e_machine), get_flags(in_file->form64.ehdr->e_type));
+get_arch(in_file->form64.ehdr->e_machine), \
+get_flags(in_file->form64.ehdr->e_type));
     printf("%s\n", get_type(in_file->form64.ehdr->e_type));
     printf("start address 0x%016lx\n\n", in_file->form64.ehdr->e_entry);
 }

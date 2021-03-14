@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2020
+** obj
+** File description:
+** *.h
+*/
+
 #ifndef __BFD_H_SEEN__
 #define __BFD_H_SEEN__
 

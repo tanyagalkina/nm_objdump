@@ -5,30 +5,32 @@
 ## Makefile
 ##
 
-NMNAME	= my_nm
+NMNAME  =   my_nm
 
-OBJNAME	= my_objdump
+OBJNAME =   my_objdump
 
-CC	= gcc
+CC  =   gcc
 
-RM	= rm -f
+RM  =   rm -f
 
-NMSRCS	=	./nm/main.c 		\
+NMSRCS  =	./nm/main.c \
+		./nm/second_main.c \
 
-OBJSRCS	=	./obj/main.c 		\
-		./obj/my_dump_first.c	\
-		./obj/error64.c		\
-		./obj/show_file.c	\
-		./obj/sections.c	\
-		./obj/print_tools.c	\
-		./obj/show_sections.c
+OBJSRCS =	./obj/main.c	\
+		./obj/my_dump_first.c   \
+		./obj/error64.c \
+		./obj/show_file.c   \
+		./obj/sections.c    \
+		./obj/print_tools.c \
+		./obj/show_sections.c   \
+		./obj/my_dump_second.c
 
+NMOBJS  =   $(NMSRCS:.c=.o)
 
-NMOBJS	= $(NMSRCS:.c=.o)
-OBJOBJS	= $(OBJSRCS:.c=.o)
+OBJOBJS =   $(OBJSRCS:.c=.o)
 
-CFLAGS = -I ./nm/include/ -I ./core/include/ -I ./objdump/include/
-CFLAGS += -W -Wall -Wextra
+CFLAGS  =   -I ./nm/include/ -I ./core/include/ -I ./objdump/include/
+CFLAGS  +=  -W -Wall -Wextra
 
 all: nm objdump
 

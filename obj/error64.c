@@ -35,7 +35,8 @@ int error64(prop_t *in_file)
         || in_file->form64.ehdr->e_ident[EI_MAG2] != ELFMAG2
         || in_file->form64.ehdr->e_ident[EI_MAG3] != ELFMAG3
         || in_file->form64.ehdr->e_ident[EI_CLASS] != ELFCLASS64) {
-        fprintf(stderr, "objdump: %s: file format not recognized\n", in_file->name);
+        fprintf(stderr, \
+"objdump: %s: file format not recognized\n", in_file->name);
         return (84);
     }
     return error_handling64(in_file);

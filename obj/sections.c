@@ -9,17 +9,13 @@
 
 void print_sections(const Elf64_Shdr shdr, char *bytes)
 {
-    unsigned int i;
+    unsigned int i = 0;
     unsigned int tmp;
     char ch;
-
-    i = 0;
     tmp = shdr.sh_addr;
     unsigned width = get_hex_width(tmp, shdr.sh_size);
-    while (i < shdr.sh_size)
-    {
-        if (i % 16 == 0)
-        {
+    while (i < shdr.sh_size) {
+        if (i % 16 == 0) {
             print_addr(width, tmp);
             tmp += 16;
             print_hex(shdr, bytes, i);
