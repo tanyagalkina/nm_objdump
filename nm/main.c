@@ -79,7 +79,7 @@ int main(int ac, char **av)
     int ret = 0;
 
     if (ac == 1) {
-            return (my_nm ("a.out"));
+            return (my_nm("a.out"));
         } else {
         for (int i = 1; i < ac; ++i) {
             ret = my_nm(av[i]);

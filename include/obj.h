@@ -2,9 +2,8 @@
 ** EPITECH PROJECT, 2020
 ** obj
 ** File description:
-** *.h
+** header
 */
-
 
 #ifndef OBJDUMP_H_
 #define OBJDUMP_H_
@@ -56,6 +55,5 @@ void print_space(unsigned int i, char end);
 int type_check(prop_t *f);
 void print_hex(const Elf64_Shdr shdr, char *bytes, \
 unsigned int i);
-
 
 #endif /* !OBJDUMP_H_ */

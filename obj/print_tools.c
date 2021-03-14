@@ -11,16 +11,14 @@ void print_space(unsigned int i, char end)
 {
     if (end == 1)
     {
-        while (i % 16 != 0)
-        {
+        while (i % 16 != 0) {
             printf(" ");
             i += 1;
         }
         printf("\n");
         return ;
     }
-    while (i % 16 != 0)
-    {
+    while (i % 16 != 0) {
         printf("  ");
         i += 1;
         if (i % 4 == 0)
@@ -35,15 +33,13 @@ unsigned int i)
 {
     char c;
 
-    while (i < shdr.sh_size)
-    {
+    while (i < shdr.sh_size) {
         c = (bytes + shdr.sh_offset)[i];
         printf("%02x", (unsigned char)c);
         i += 1;
-        if (i % 16 == 0)
-        {
+        if (i % 16 == 0) {
             printf("  ");
-            break ;
+            break;
         }
         if (i % 4 == 0)
             printf(" ");
