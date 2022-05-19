@@ -1,5 +1,5 @@
-# nmobjdump
-Epitech Second Year Project, nmobjdump in c
+# nm & objdump
+Epitech Second Year Project, nm & objdump in C
 
 #### Subject:
 
